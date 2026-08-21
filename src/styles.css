@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Oswald:wght@500;700&display=swap');
+
+:root { font-family: 'IBM Plex Mono', monospace; color: #e9ebd6; background: #090a07; }
+* { box-sizing: border-box; }
+html, body, #app, #game { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: #050604; }
+canvas { display: block; }
+button { font: inherit; }
+.hidden { display: none !important; }
+
+#film-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 4; opacity: .6; mix-blend-mode: screen; background: repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px); }
+#film-overlay::after { content: ''; position: absolute; inset: -25%; background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(0,0,0,.72) 92%), linear-gradient(90deg, rgba(255,40,20,.018), transparent 30%, rgba(30,120,255,.018)); animation: drift 6s steps(2) infinite; }
+@keyframes drift { 50% { transform: translate(1.2%, -.8%) scale(1.015); opacity: .8; } }
+
+#hud { position: fixed; inset: 0; z-index: 5; pointer-events: none; padding: 28px 30px; text-shadow: 0 1px 4px #000; font-size: 12px; letter-spacing: .04em; }
+.rec-line { display: flex; gap: 10px; align-items: center; font-weight: 600; }
+.rec-dot { width: 9px; height: 9px; border-radius: 50%; background: #ff3128; box-shadow: 0 0 8px #ff3128; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: .15; } }
+#timecode { margin-left: 5px; }
+#objective { position: absolute; left: 30px; bottom: 56px; max-width: 420px; border-left: 2px solid rgba(232,237,194,.6); padding: 6px 10px; background: rgba(4,5,3,.25); }
+.status-row { position: absolute; right: 30px; top: 28px; display: flex; gap: 18px; opacity: .82; }
+.status-row b { font-weight: 600; color: #fff; }
+#prompt { position: absolute; left: 50%; bottom: 18%; transform: translateX(-50%); padding: 7px 10px; background: rgba(0,0,0,.45); opacity: .9; }
+#subtitle { position: absolute; left: 50%; bottom: 11%; transform: translateX(-50%); width: min(680px, 80vw); text-align: center; color: #f5f2d0; font-size: 13px; }
+.crosshair { position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.65); }
+
+.panel { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(28px, 7vw, 100px); background: radial-gradient(circle at 72% 45%, rgba(110,105,44,.16), transparent 25%), linear-gradient(105deg, rgba(4,5,3,.98) 0 47%, rgba(4,5,3,.75) 72%, rgba(4,5,3,.35)); }
+.panel::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.018) 3px 4px); }
+.eyebrow { color: #b9b887; font-size: 11px; letter-spacing: .18em; margin-bottom: 16px; }
+h1, h2 { font-family: Oswald, sans-serif; margin: 0; line-height: .88; letter-spacing: -.03em; text-transform: uppercase; font-size: clamp(56px, 9vw, 138px); }
+h1 span { color: #d6d26e; }
+h2 { font-size: clamp(48px, 7vw, 94px); }
+.lede { margin: 26px 0; max-width: 520px; color: #b9baa9; line-height: 1.65; }
+.panel button { position: relative; pointer-events: auto; border: 1px solid #d7d87f; color: #0c0d08; background: #d7d87f; padding: 13px 18px; cursor: pointer; font-weight: 600; letter-spacing: .05em; transition: .18s ease; }
+.panel button:hover { background: #f0f19a; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(204,205,112,.14); }
+.controls, .warning { max-width: 650px; color: #7f8174; font-size: 10px; margin-top: 24px; line-height: 1.6; }
+.warning { margin-top: 9px; }
+kbd { border: 1px solid #5c5e50; border-radius: 2px; padding: 1px 4px; color: #bdbfa7; }
+.compact { inset: auto 26px 26px auto; width: min(420px, calc(100vw - 52px)); height: auto; padding: 24px; background: rgba(5,6,4,.91); border: 1px solid rgba(210,212,143,.28); }
+.compact h2 { font-size: 34px; }
+.compact p { color: #a9aa98; font-size: 11px; }
+
+@media (max-width: 720px) { #hud { padding: 18px; } .status-row { right: 18px; top: 52px; flex-direction: column; gap: 3px; } #objective { left: 18px; bottom: 40px; } }

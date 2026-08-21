@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#12130c" />
+    <title>Threshold Tape 01</title>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+      <div id="film-overlay" aria-hidden="true"></div>
+      <div id="hud" class="hidden">
+        <div class="rec-line"><span class="rec-dot"></span><span>REC</span><span id="timecode">00:00:00</span></div>
+        <div id="objective">Locate the missing survey tapes.</div>
+        <div class="status-row">
+          <span>STAMINA <b id="stamina">100</b></span>
+          <span>STRESS <b id="stress">0</b></span>
+          <span>TAPES <b id="tapes">0/3</b></span>
+        </div>
+        <div id="prompt"></div>
+        <div id="subtitle"></div>
+        <div class="crosshair"></div>
+      </div>
+      <div id="menu" class="panel">
+        <div class="eyebrow">ARCHIVE // INCIDENT 01</div>
+        <h1>THRESHOLD<br/><span>TAPE 01</span></h1>
+        <p class="lede">A first-person found-footage descent into an impossible service floor.</p>
+        <button id="start">ENTER THE FLOOR</button>
+        <p class="controls">WASD move · SHIFT sprint · MOUSE look · E interact · ESC pause</p>
+        <div class="warning">Headphones recommended. Photosensitivity: fluorescent flicker can be disabled after starting with <kbd>F</kbd>.</div>
+      </div>
+      <div id="end" class="panel hidden">
+        <div class="eyebrow" id="end-kicker">TAPE ENDED</div>
+        <h2 id="end-title">SIGNAL LOST</h2>
+        <p id="end-copy"></p>
+        <button id="restart">REWIND</button>
+      </div>
+      <div id="pause" class="panel compact hidden">
+        <div class="eyebrow">CAMERA PAUSED</div>
+        <h2>NO SIGNAL</h2>
+        <p>Click the game to resume pointer lock.</p>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
