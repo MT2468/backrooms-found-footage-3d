@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Campaign } from './Campaign';
 import type { ChapterWorld } from './types';
 
-type CampaignInternals = Campaign & {
+type CampaignInternals = {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   renderer: THREE.WebGLRenderer;
@@ -21,10 +21,9 @@ type LightingState = {
   flashlightTarget: THREE.Object3D;
   nearFill: THREE.PointLight;
   enabled: boolean;
-  initialized: boolean;
 };
 
-const states = new WeakMap<Campaign, LightingState>();
+const states = new WeakMap<object, LightingState>();
 let patched = false;
 
 const LIGHTING: Record<ChapterWorld['ambient'], { ambient: number; hemi: number; exposure: number }> = {
@@ -89,16 +88,15 @@ function makeState(game: CampaignInternals): LightingState {
     flashlightTarget,
     nearFill,
     enabled: true,
-    initialized: true,
   };
 
-  states.set(game, state);
+  states.set(game as object, state);
   updateHud(state);
   return state;
 }
 
 function stateFor(game: CampaignInternals): LightingState {
-  return states.get(game) ?? makeState(game);
+  return states.get(game as object) ?? makeState(game);
 }
 
 function updateHud(state: LightingState): void {
@@ -108,15 +106,15 @@ function updateHud(state: LightingState): void {
 
 function applyChapterProfile(game: CampaignInternals): void {
   const state = stateFor(game);
-  const ambient = game.world?.ambient ?? 'yellow';
+  const ambient: ChapterWorld['ambient'] = game.world?.ambient ?? 'yellow';
   const profile = LIGHTING[ambient];
 
   state.ambient.intensity = profile.ambient;
   state.hemisphere.intensity = profile.hemi;
   game.renderer.toneMappingExposure = profile.exposure;
 
-  // A lanterna continua disponível em todos os capítulos. Em áreas claras,
-  // o feixe fica menos agressivo; nas áreas escuras ele ganha alcance/intensidade.
+  // Em áreas claras o feixe é discreto. Nos capítulos escuros ele ganha alcance,
+  // mas a iluminação ambiente continua garantindo orientação sem apagar o terror.
   const dark = ambient === 'therapy' || ambient === 'memory' || ambient === 'kingdom' || ambient === 'chase';
   state.flashlight.intensity = dark ? 10.5 : 8.0;
   state.flashlight.distance = dark ? 36 : 30;
@@ -131,8 +129,7 @@ function updateFlashlight(game: CampaignInternals): void {
   state.flashlight.visible = state.enabled;
   state.nearFill.visible = state.enabled;
 
-  state.flashlight.position.copy(camera.position);
-  state.flashlight.position.addScaledVector(direction, 0.08);
+  state.flashlight.position.copy(camera.position).addScaledVector(direction, 0.08);
   state.flashlightTarget.position.copy(camera.position).addScaledVector(direction, 12);
   state.nearFill.position.copy(camera.position).addScaledVector(direction, 0.45);
 
@@ -158,7 +155,7 @@ export function applyLightingPatch(): void {
 
   proto.loadChapter = function (this: Campaign, ...args: unknown[]): unknown {
     const result = originalLoadChapter.apply(this, args);
-    const game = this as CampaignInternals;
+    const game = this as unknown as CampaignInternals;
     ensureHud();
     applyChapterProfile(game);
     updateFlashlight(game);
@@ -167,7 +164,7 @@ export function applyLightingPatch(): void {
 
   proto.update = function (this: Campaign, ...args: unknown[]): unknown {
     const result = originalUpdate.apply(this, args);
-    updateFlashlight(this as CampaignInternals);
+    updateFlashlight(this as unknown as CampaignInternals);
     return result;
   };
 
@@ -175,7 +172,7 @@ export function applyLightingPatch(): void {
     const e = eventUnknown as KeyboardEvent;
     if (e.code === 'KeyT' && !e.repeat) {
       e.preventDefault();
-      toggleFlashlight(this as CampaignInternals);
+      toggleFlashlight(this as unknown as CampaignInternals);
       return;
     }
     return originalKeyDown.call(this, e);
