@@ -1,10 +1,12 @@
 import './styles.css';
-import { Game } from './game/Game';
+import { Campaign } from './game/Campaign';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game');
-if (!canvas) throw new Error('Missing game canvas');
+if (!canvas) throw new Error('Game canvas not found.');
 
-const game = new Game(canvas);
-game.boot();
-
-(window as unknown as { thresholdGame: Game }).thresholdGame = game;
+try {
+  new Campaign(canvas);
+} catch (error) {
+  console.error(error);
+  document.body.innerHTML = `<main class="fatal"><h1>WEBGL INITIALIZATION FAILED</h1><p>This build needs a browser with WebGL2 enabled.</p><pre>${String(error)}</pre></main>`;
+}
