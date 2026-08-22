@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16170f" />
+    <meta name="description" content="A complete Three.js found-footage horror campaign set in an impossible architecture." />
+    <title>BACKROOMS // Threshold Archive</title>
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="game" aria-label="3D game view"></canvas>
+      <div id="film-overlay" aria-hidden="true"></div>
+      <div id="vignette" aria-hidden="true"></div>
+
+      <section id="hud" class="hidden" aria-live="polite">
+        <div class="tape-meta"><span class="rec-dot"></span><span>REC</span><span id="timecode">00:00:00</span></div>
+        <div id="objective">...</div>
+        <div class="status"><span>STAMINA <b id="stamina">100</b></span><span>STRESS <b id="stress">0</b></span></div>
+        <div id="prompt"></div>
+        <div id="subtitle"></div>
+        <div class="crosshair" aria-hidden="true"></div>
+      </section>
+
+      <section id="menu" class="screen menu-screen">
+        <div class="menu-copy">
+          <div class="eyebrow">ASYNC ARCHIVE // RECOVERED MATERIAL</div>
+          <h1>BACKROOMS</h1>
+          <p class="subhead">THRESHOLD ARCHIVE</p>
+          <p class="lede">1990. A doorway appears below a dying furniture showroom. Some places remember people badly.</p>
+          <div class="menu-actions">
+            <button id="start">NEW TAPE</button>
+            <button id="continue" class="ghost hidden">CONTINUE</button>
+            <button id="settings-button" class="ghost">SETTINGS</button>
+          </div>
+          <p class="controls">WASD move · SHIFT sprint · CTRL/C crouch · MOUSE look · E interact · SPACE strike · F flicker safety · F3 diagnostics</p>
+          <p class="warning">Headphones recommended. Includes flickering fluorescent effects and horror imagery.</p>
+        </div>
+        <div class="archive-stamp">CASE 90-11<br/>UNRESOLVED</div>
+      </section>
+
+      <section id="chapter-card" class="chapter-card hidden">
+        <div id="chapter-kicker" class="eyebrow"></div>
+        <div id="chapter-title" class="chapter-title"></div>
+      </section>
+
+      <section id="choices" class="dialog-panel hidden" role="dialog" aria-modal="true">
+        <div class="eyebrow">RESPONSE</div>
+        <h2 id="choice-prompt">Choose</h2>
+        <div id="choice-buttons"></div>
+      </section>
+
+      <section id="pause" class="dialog-panel compact hidden" role="dialog" aria-modal="true">
+        <div class="eyebrow">TAPE PAUSED</div>
+        <h2>PAUSE</h2>
+        <button id="resume">RESUME</button>
+        <button id="restart-chapter" class="ghost">RESTART CHAPTER</button>
+      </section>
+
+      <section id="settings" class="dialog-panel settings hidden" role="dialog" aria-modal="true">
+        <div class="eyebrow">PLAYBACK CONFIGURATION</div>
+        <h2>SETTINGS</h2>
+        <label class="toggle"><span>Reduced fluorescent flicker</span><input id="reduced-flicker" type="checkbox" /></label>
+        <label><span>Film grain</span><input id="grain" type="range" min="0" max="0.8" value="0.42" step="0.02" /></label>
+        <label><span>Mouse sensitivity</span><input id="sensitivity" type="range" min="0.0008" max="0.0045" value="0.0021" step="0.0001" /></label>
+        <label><span>Volume</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.02" /></label>
+        <button id="settings-close">CLOSE</button>
+      </section>
+
+      <section id="end" class="screen end-screen hidden">
+        <div class="end-copy">
+          <div class="eyebrow">ASYNC ARCHIVE // TAPE TERMINATED</div>
+          <h2>THE ROOM REMEMBERS MARY.</h2>
+          <p>Recovery was not an exit. Somewhere beyond the controlled threshold, a room now contains her covered windows, her handprint, and a person shaped almost correctly.</p>
+          <div class="end-sigil" aria-hidden="true">▯ ▯ ▯</div>
+          <button id="rewind">REWIND FROM BEGINNING</button>
+        </div>
+      </section>
+
+      <pre id="debug" class="debug hidden"></pre>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
