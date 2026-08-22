@@ -1,8 +1,10 @@
 import './styles.css';
 import { Campaign } from './game/Campaign';
 import { applyPtBRPatches } from './game/ptbrPatch';
+import { applyLightingPatch } from './game/lightingPatch';
 
 applyPtBRPatches();
+applyLightingPatch();
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game');
 if (!canvas) throw new Error('Canvas do jogo não encontrado.');
