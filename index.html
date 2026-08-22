@@ -1,22 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#16170f" />
-    <meta name="description" content="A complete Three.js found-footage horror campaign set in an impossible architecture." />
-    <title>BACKROOMS // Threshold Archive</title>
+    <meta name="description" content="Uma campanha completa de terror found-footage em Three.js dentro de uma arquitetura impossível." />
+    <title>BACKROOMS // Arquivo do Limiar</title>
   </head>
   <body>
     <main id="app">
-      <canvas id="game" aria-label="3D game view"></canvas>
+      <canvas id="game" aria-label="Visão 3D do jogo"></canvas>
       <div id="film-overlay" aria-hidden="true"></div>
       <div id="vignette" aria-hidden="true"></div>
 
       <section id="hud" class="hidden" aria-live="polite">
-        <div class="tape-meta"><span class="rec-dot"></span><span>REC</span><span id="timecode">00:00:00</span></div>
+        <div class="tape-meta"><span class="rec-dot"></span><span>GRAV</span><span id="timecode">00:00:00</span></div>
         <div id="objective">...</div>
-        <div class="status"><span>STAMINA <b id="stamina">100</b></span><span>STRESS <b id="stress">0</b></span></div>
+        <div class="status"><span>FÔLEGO <b id="stamina">100</b></span><span>TENSÃO <b id="stress">0</b></span></div>
         <div id="prompt"></div>
         <div id="subtitle"></div>
         <div class="crosshair" aria-hidden="true"></div>
@@ -24,19 +24,19 @@
 
       <section id="menu" class="screen menu-screen">
         <div class="menu-copy">
-          <div class="eyebrow">ASYNC ARCHIVE // RECOVERED MATERIAL</div>
+          <div class="eyebrow">ARQUIVO ASYNC // MATERIAL RECUPERADO</div>
           <h1>BACKROOMS</h1>
-          <p class="subhead">THRESHOLD ARCHIVE</p>
-          <p class="lede">1990. A doorway appears below a dying furniture showroom. Some places remember people badly.</p>
+          <p class="subhead">ARQUIVO DO LIMIAR</p>
+          <p class="lede">1990. Uma passagem aparece sob uma loja de móveis à beira da falência. Alguns lugares lembram das pessoas de forma errada.</p>
           <div class="menu-actions">
-            <button id="start">NEW TAPE</button>
-            <button id="continue" class="ghost hidden">CONTINUE</button>
-            <button id="settings-button" class="ghost">SETTINGS</button>
+            <button id="start">NOVA FITA</button>
+            <button id="continue" class="ghost hidden">CONTINUAR</button>
+            <button id="settings-button" class="ghost">CONFIGURAÇÕES</button>
           </div>
-          <p class="controls">WASD move · SHIFT sprint · CTRL/C crouch · MOUSE look · E interact · SPACE strike · F flicker safety · F3 diagnostics</p>
-          <p class="warning">Headphones recommended. Includes flickering fluorescent effects and horror imagery.</p>
+          <p class="controls">WASD mover · SHIFT correr · CTRL/C agachar · MOUSE olhar · E interagir · ESPAÇO golpear · F reduzir cintilação · F3 diagnóstico</p>
+          <p class="warning">Recomendado usar fones. Contém efeitos de luz fluorescente piscando e imagens de terror.</p>
         </div>
-        <div class="archive-stamp">CASE 90-11<br/>UNRESOLVED</div>
+        <div class="archive-stamp">CASO 90-11<br/>NÃO RESOLVIDO</div>
       </section>
 
       <section id="chapter-card" class="chapter-card hidden">
@@ -45,35 +45,35 @@
       </section>
 
       <section id="choices" class="dialog-panel hidden" role="dialog" aria-modal="true">
-        <div class="eyebrow">RESPONSE</div>
-        <h2 id="choice-prompt">Choose</h2>
+        <div class="eyebrow">RESPOSTA</div>
+        <h2 id="choice-prompt">Escolha</h2>
         <div id="choice-buttons"></div>
       </section>
 
       <section id="pause" class="dialog-panel compact hidden" role="dialog" aria-modal="true">
-        <div class="eyebrow">TAPE PAUSED</div>
-        <h2>PAUSE</h2>
-        <button id="resume">RESUME</button>
-        <button id="restart-chapter" class="ghost">RESTART CHAPTER</button>
+        <div class="eyebrow">FITA PAUSADA</div>
+        <h2>PAUSA</h2>
+        <button id="resume">CONTINUAR</button>
+        <button id="restart-chapter" class="ghost">REINICIAR CAPÍTULO</button>
       </section>
 
       <section id="settings" class="dialog-panel settings hidden" role="dialog" aria-modal="true">
-        <div class="eyebrow">PLAYBACK CONFIGURATION</div>
-        <h2>SETTINGS</h2>
-        <label class="toggle"><span>Reduced fluorescent flicker</span><input id="reduced-flicker" type="checkbox" /></label>
-        <label><span>Film grain</span><input id="grain" type="range" min="0" max="0.8" value="0.42" step="0.02" /></label>
-        <label><span>Mouse sensitivity</span><input id="sensitivity" type="range" min="0.0008" max="0.0045" value="0.0021" step="0.0001" /></label>
+        <div class="eyebrow">CONFIGURAÇÃO DE REPRODUÇÃO</div>
+        <h2>CONFIGURAÇÕES</h2>
+        <label class="toggle"><span>Reduzir cintilação fluorescente</span><input id="reduced-flicker" type="checkbox" /></label>
+        <label><span>Granulação do filme</span><input id="grain" type="range" min="0" max="0.8" value="0.42" step="0.02" /></label>
+        <label><span>Sensibilidade do mouse</span><input id="sensitivity" type="range" min="0.0008" max="0.0045" value="0.0021" step="0.0001" /></label>
         <label><span>Volume</span><input id="volume" type="range" min="0" max="1" value="0.72" step="0.02" /></label>
-        <button id="settings-close">CLOSE</button>
+        <button id="settings-close">FECHAR</button>
       </section>
 
       <section id="end" class="screen end-screen hidden">
         <div class="end-copy">
-          <div class="eyebrow">ASYNC ARCHIVE // TAPE TERMINATED</div>
-          <h2>THE ROOM REMEMBERS MARY.</h2>
-          <p>Recovery was not an exit. Somewhere beyond the controlled threshold, a room now contains her covered windows, her handprint, and a person shaped almost correctly.</p>
+          <div class="eyebrow">ARQUIVO ASYNC // FITA ENCERRADA</div>
+          <h2>A SALA SE LEMBRA DE MARY.</h2>
+          <p>Ser recuperada não foi uma saída. Em algum ponto além do limiar controlado, agora existe uma sala com as janelas cobertas dela, sua marca de mão e uma pessoa com uma forma quase correta.</p>
           <div class="end-sigil" aria-hidden="true">▯ ▯ ▯</div>
-          <button id="rewind">REWIND FROM BEGINNING</button>
+          <button id="rewind">REBOBINAR DESDE O INÍCIO</button>
         </div>
       </section>
 
